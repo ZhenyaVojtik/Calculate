@@ -1,40 +1,46 @@
-import java.io.BufferedReader;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Action act = new Action();
+        double savedResult;
+        double first;
+        double second;
+        String action ="" ;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Enter your dare");
-        double first = scan.nextDouble();
-        String sign = scan.next();
-        double second = scan.nextDouble();
-        String again = "no";
-        while (!again.equals("yes")) {
-            switch (sign) {
-                case "+": {
-                    System.out.println(act.summ(first, second));
-                    break;
-                }
-                case "-": {
-                    System.out.println(act.minus(first, second));
-                    break;
-                }
-                case "*": {
-                    System.out.println(act.mult(first, second));
-                    break;
-                }
+        String userChoice = "";
+        Action act = new Action();
 
-                case "/": {
-                    System.out.println(act.devide(first, second));
-                    break;
-                }
+        try {
+                do {
+                    System.out.println("Enter first number");
+                    first = scan.nextDouble();
+                    savedResult = first;
+                    while (!action.equals("exit")) {
 
-            }
-            again = scan.next();
-            //System.out.println("DO you want to continue? yes/no");
-            //again = scan.next();
-        }
+                        System.out.println("Enter your operation");
+                        action = scan.next();
+                        if(action.equals("exit"))
+                        {userChoice = "yes";
+                        break;}
+                        else if(action.equals("c"))
+                        {System.out.println(savedResult);
+                            break;}
+                        System.out.println("Enter second number");
+
+                        second = scan.nextDouble();
+                        if (action.equals("/") && second == 0) {
+                            throw new Exception();
+                        }
+                        savedResult = act.actions(savedResult, second, action);
+                        System.out.println(savedResult);
+
+                    }
+                }while(!userChoice.equals("yes"));
+
+            }catch(Exception E)
+            { System.out.println("illegal action"); }
+
+
     }
 }
